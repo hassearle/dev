@@ -8,7 +8,7 @@ load "/home/asearle/dev/asgmt1/sch17s__ppl__asgmt1__TinyScanner.rb"
 # simply include the file name, otherwise, you will need
 # to specify the entire path to the file as we did above
 # to load the other ruby modules
-scan = Scanner.new("sch17s__ppl__asgmt1__SourceCode.txt")
+scan = Scanner.new("sch17s__ppl__asgmt1__input.txt")
 tok = scan.nextToken()
 while (tok.get_type() != Token::EOF)
 
