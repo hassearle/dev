@@ -71,18 +71,25 @@ class Scanner
 			#-=-=-=-=
 				#collects letter tokens
 				elsif(letter?(@c))
-				ltr = ""
-				pnt = ""
+					ltr = ""
+					pnt = ""
 					
 					#input == print?
-					while print?(@c)
-						pnt += @c
-						nextCh()
-						
+					if(@c == 'p')	
+						while print?(@c)
+							pnt += @c
+							if(pnt == "print")
+								tok = Token.new(Token::PRINT,pnt)
+								return tok
+							end
+							nextCh()
+						end
 					end
-			
-				tok = Token.new(Token::LETTER,ltr)
-				return tok
+					
+					else 
+						tok = Token.new(Token::LETTER,ltr)
+						return tok
+					
 			# more code needed here! complete the code here 
 			# so that your scanner can correctly recognize
 			# and print or display all tokens in our grammar
