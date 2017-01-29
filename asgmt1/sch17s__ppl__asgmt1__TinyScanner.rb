@@ -54,7 +54,6 @@ class Scanner
 				
 		if (! @f.eof?)
 			@c = @f.getc()
-			print @c
 		else
 			@c = "!eof!"
 			@f.close()
@@ -65,7 +64,6 @@ class Scanner
 	def nextCh()
 		if (! @f.eof?)
 			@c = @f.getc()
-			print @c
 		else
 			@c = "!eof!"
 		end
@@ -164,10 +162,14 @@ class Scanner
 		lookAhead =~ /^p|r|i|n|t/
 	end
 
+	def operator?(lookAhead)
+		lookAhead =~ /\/|\-|\+|\*|\=/
+	end
+
 	# Method open_file?
 	# exits the program if it cannot open input file
 	def open_file?(filename)
-		#REFRENCE5
+		#REFRENCE5|\=
 		if(File.open(filename,'r:utf-8').close || true rescue false)
 			return true
 		else 
