@@ -1,22 +1,43 @@
+#REFRENCES:
+	#REFRENCE2:
+		#Rodrigo Sardiñas
+		#sch17s__ppl__asgmt1__TinyScanner.rb
+		#method letter?
+		#&&
+		#user559633 
+		#http://stackoverflow.com/questions/26938262/what-do-and-mean-in-ruby
+		
+	#REFRENCE3:
+		#kjagiello
+		#http://stackoverflow.com/questions/2060253/how-to-do-a-newline-in-output
+
+	#REFRENCE4
+		#Icid
+		#http://stackoverflow.com/questions/4432506/stop-execution-of-ruby-script
+
+	#REFRENCE5
+		#Robert Klemme
+		#https://www.ruby-forum.com/topic/197975
+
 # bhttps://www.cs.rochester.edu/~brown/173/readings/05_grammars.txt
-#
-#  "TINY" Grammar
-#
-# PGM        -->   STMT+
-# STMT       -->   ASSIGN   |   "print"  EXP                           
-# ASSIGN     -->   ID  "="  EXP
-# EXP        -->   TERM   ETAIL
-# ETAIL      -->   "+" TERM   ETAIL  | "-" TERM   ETAIL | EPSILON
-# TERM       -->   FACTOR  TTAIL
-# TTAIL      -->   "*" FACTOR TTAIL  | "/" FACTOR TTAIL | EPSILON
-# FACTOR     -->   "(" EXP ")" | INT | ID   
-#                  
-# ID         -->   ALPHA+
-# ALPHA      -->   a  |  b  | … | z  or 
-#                  A  |  B  | … | Z
-# INT        -->   DIGIT+
-# DIGIT      -->   0  |  1  | …  |  9
-# WHITESPACE -->   Ruby Whitespace
+	#
+	#  "TINY" Grammar
+	#
+	# PGM        -->   STMT+
+	# STMT       -->   ASSIGN   |   "print"  EXP                           
+	# ASSIGN     -->   ID  "="  EXP
+	# EXP        -->   TERM   ETAIL
+	# ETAIL      -->   "+" TERM   ETAIL  | "-" TERM   ETAIL | EPSILON
+	# TERM       -->   FACTOR  TTAIL
+	# TTAIL      -->   "*" FACTOR TTAIL  | "/" FACTOR TTAIL | EPSILON
+	# FACTOR     -->   "(" EXP ")" | INT | ID   
+	#                  
+	# ID         -->   ALPHA+
+	# ALPHA      -->   a  |  b  | … | z  or 
+	#                  A  |  B  | … | Z
+	# INT        -->   DIGIT+
+	# DIGIT      -->   0  |  1  | …  |  9
+	# WHITESPACE -->   Ruby Whitespace
 
 #
 #  Class Scanner - Reads a TINY program and emits tokens
@@ -27,8 +48,10 @@ class Scanner
 #   @c        - A one character lookahead 
 	def initialize(filename)
 		
-		@f = File.open(filename,'r:utf-8')
-		
+		if (open_file?(filename) == true) 
+			@f = File.open(filename,'r:utf-8') || true rescue false
+		end	
+				
 		if (! @f.eof?)
 			@c = @f.getc()
 		else
@@ -55,19 +78,22 @@ class Scanner
 			return Token.new(Token::EOF,"eof")
 
 			#-=-=-=-=
-				elsif (whitespace?(@c))
-				str =""
-		
-				#collects all whitespace between tokens		
-				while whitespace?(@c)
-					str += @c
-					nextCh()
-				end
-		
-				tok = Token.new(Token::WS,str)
-				return tok
+			#WhiteSpace
 			#-=-=-=-=
+				elsif (whitespace?(@c))
+					str =""
+			
+					#collects all whitespace between tokens		
+					while whitespace?(@c)
+						str += @c
+						nextCh()
+					end
+			
+					tok = Token.new(Token::WS,str)
+					return tok
 
+			#-=-=-=-=
+			#Letters & Print
 			#-=-=-=-=
 				#collects letter tokens
 				elsif(letter?(@c))
@@ -75,7 +101,7 @@ class Scanner
 					pnt = ""
 					
 					#input == print?
-					if(@c == 'p')	
+					if(@c == 'p')
 						while print?(@c)
 							pnt += @c
 							if(pnt == "print")
@@ -84,12 +110,21 @@ class Scanner
 							end
 							nextCh()
 						end
-					end
-					
+										
 					else 
 						tok = Token.new(Token::LETTER,ltr)
 						return tok
-					
+					end
+
+			#-=-=-=-=
+			#Numbers
+			#-=-=-=-=
+				elsif(numeric?(@c))
+					num = ""
+					tok = Token.new(Token::NUMBER,num)
+					return tok
+				
+				
 			# more code needed here! complete the code here 
 			# so that your scanner can correctly recognize
 			# and print or display all tokens in our grammar
@@ -118,9 +153,21 @@ class Scanner
 		lookAhead =~ /^(\s)+$/
 	end
 
+	#REFRENCE2
 	def print?(lookAhead)
 		lookAhead =~ 'p'|'r'|'i'|'n'|'t'
 	end
 
+	# Method open_file?
+	# exits the program if it cannot open input file
+	def open_file?(filename)
+		#REFRENCE5
+		if(File.open(filename,'r:utf-8').close || true rescue false)
+			return true
+		else 
+			print "ERROR: file cannot be opened \n\n" #REFRENCE3
+			exit #REFRENCE4
+		end
+	end
 
 end
