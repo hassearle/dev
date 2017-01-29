@@ -54,6 +54,7 @@ class Scanner
 				
 		if (! @f.eof?)
 			@c = @f.getc()
+			print @c
 		else
 			@c = "!eof!"
 			@f.close()
@@ -64,6 +65,7 @@ class Scanner
 	def nextCh()
 		if (! @f.eof?)
 			@c = @f.getc()
+			print @c
 		else
 			@c = "!eof!"
 		end
@@ -123,6 +125,10 @@ class Scanner
 					num = ""
 					tok = Token.new(Token::NUMBER,num)
 					return tok
+
+			#-=-=-=-=
+			#Operators
+			#-=-=-=-=
 				
 				
 			# more code needed here! complete the code here 
@@ -155,7 +161,7 @@ class Scanner
 
 	#REFRENCE2
 	def print?(lookAhead)
-		lookAhead =~ 'p'|'r'|'i'|'n'|'t'
+		lookAhead =~ /^p|r|i|n|t/
 	end
 
 	# Method open_file?
