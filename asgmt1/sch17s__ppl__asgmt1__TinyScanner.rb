@@ -54,42 +54,66 @@ class Scanner
 		if @c == "!eof!"
 			return Token.new(Token::EOF,"eof")
 
-		elsif (whitespace?(@c))
-			str =""
+			#-=-=-=-=
+				elsif (whitespace?(@c))
+				str =""
 		
-			while whitespace?(@c)
-				str += @c
-				nextCh()
-			end
+				#collects all whitespace between tokens		
+				while whitespace?(@c)
+					str += @c
+					nextCh()
+				end
 		
-			tok = Token.new(Token::WS,str)
-			return tok
-		# elsif ...
-		# more code needed here! complete the code here 
-		# so that your scanner can correctly recognize
-		# and print or display all tokens in our grammar
+				tok = Token.new(Token::WS,str)
+				return tok
+			#-=-=-=-=
+
+			#-=-=-=-=
+				#collects letter tokens
+				elsif(letter?(@c))
+				ltr = ""
+				pnt = ""
+					
+					#input == print?
+					while print?(@c)
+						pnt += @c
+						nextCh()
+						
+					end
+			
+				tok = Token.new(Token::LETTER,ltr)
+				return tok
+			# more code needed here! complete the code here 
+			# so that your scanner can correctly recognize
+			# and print or display all tokens in our grammar
 		
-		# don't want to give back nil token!
-		# remember to include some case to handle
-		# unknown or unrecognized tokens.
-		## tok = Token.new("unknown","unknown")
+			# don't want to give back nil token!
+			# remember to include some case to handle
+			# unknown or unrecognized tokens.
+			## tok = Token.new("unknown","unknown")
+
 		end
 	
 	end
-#
-# Helper methods for Scanner
-#
-def letter?(lookAhead)
-	lookAhead =~ /^[a-z]|[A-Z]$/
-end
+	
+	#
+	# Helper methods for Scanner
+	#
+	def letter?(lookAhead)
+		lookAhead =~ /^[a-z]|[A-Z]$/
+	end
 
-def numeric?(lookAhead)
-	lookAhead =~ /^(\d)+$/
-end
+	def numeric?(lookAhead)
+		lookAhead =~ /^(\d)+$/
+	end
 
-def whitespace?(lookAhead)
-	lookAhead =~ /^(\s)+$/
-end
+	def whitespace?(lookAhead)
+		lookAhead =~ /^(\s)+$/
+	end
+
+	def print?(lookAhead)
+		lookAhead =~ 'p'|'r'|'i'|'n'|'t'
+	end
 
 
 end
