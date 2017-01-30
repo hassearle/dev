@@ -74,59 +74,119 @@ class Scanner
 	# Method nextToken() reads characters in the file and returns
 	# the next token
 	def nextToken() 
-		if @c == "!eof!"
-			return Token.new(Token::EOF,"eof")
-
-			#-=-=-=-=
-			#WhiteSpace
-			#-=-=-=-=
-				elsif (whitespace?(@c))
-					str =""
+		
+		case(@c)
+		#end of file
+		when "!eof!" then return Token.new(Token::EOF,"eof")
+		#whitespace
+		when whitespace?(@c) 
+			then 
+			str =""
 			
-					#collects all whitespace between tokens		
-					while whitespace?(@c)
-						str += @c
-						nextCh()
-					end
+			#collects all whitespace between tokens		
+			while whitespace?(@c)
+				str += @c
+				nextCh()
+			end
+	
+			tok = Token.new(Token::WS,str)
+			return tok
+		#letter
+		when letter?(@c)
+			then 
+			# collects letter tokens
+			ltr = ""
+			pnt = ""
 			
-					tok = Token.new(Token::WS,str)
-					return tok
-
-			#-=-=-=-=
-			#Letters & Print
-			#-=-=-=-=
-				#collects letter tokens
-				elsif(letter?(@c))
-					ltr = ""
-					pnt = ""
-					
-					#input == print?
-					if(@c == 'p')
-						while print?(@c)
-							pnt += @c
-							if(pnt == "print")
-								tok = Token.new(Token::PRINT,pnt)
-								return tok
-							end
-							nextCh()
-						end
-										
-					else 
-						tok = Token.new(Token::LETTER,ltr)
+			#input == print?
+			if(@c == 'p')
+				while print?(@c)
+					pnt += @c
+					if(pnt == "print")
+						tok = Token.new(Token::PRINT,pnt)
 						return tok
 					end
+					nextCh()
+				end
+								
+			else 
+				tok = Token.new(Token::LTR,ltr)
+				return tok
+			end
+		#numbers
+		when numeric?(@c)
+			num = ""
+			tok = Token.new(Token::NUMBER,num)
+			return tok
+		#operator
+		when operator?(@c)
+			oprtr = ""
+			tok = Token.new(Token::OPERATOR,oprtr)
+			return tok
+		end
 
-			#-=-=-=-=
-			#Numbers
-			#-=-=-=-=
-				elsif(numeric?(@c))
-					num = ""
-					tok = Token.new(Token::NUMBER,num)
-					return tok
 
-			#-=-=-=-=
-			#Operators
-			#-=-=-=-=
+
+
+
+
+
+
+		# if @c == "!eof!"
+			# 	return Token.new(Token::EOF,"eof")
+
+			# 	#-=-=-=-=
+			# 	#WhiteSpace
+			# 	#-=-=-=-=
+			# 		elsif(whitespace?(@c))
+			# 			str =""
+				
+			# 			#collects all whitespace between tokens		
+			# 			while whitespace?(@c)
+			# 				str += @c
+			# 				nextCh()
+			# 			end
+				
+			# 			tok = Token.new(Token::WS,str)
+			# 			return tok
+
+			# end
+
+			# #-=-=-=-=
+			# #Letters & Print
+			# #-=-=-=-=
+			# 	#collects letter tokens
+			# 	elsif(letter?(@c))
+			# 		ltr = ""
+			# 		pnt = ""
+					
+			# 		#input == print?
+			# 		if(@c == 'p')
+			# 			while print?(@c)
+			# 				pnt += @c
+			# 				if(pnt == "print")
+			# 					tok = Token.new(Token::PRINT,pnt)
+			# 					return tok
+			# 				end
+			# 				nextCh()
+			# 			end
+										
+			# 		else 
+			# 			tok = Token.new(Token::LTR,ltr)
+			# 			return tok
+			# 		end
+
+			# #-=-=-=-=
+			# #Numbers
+			# #-=-=-=-=
+			# 	elsif(numeric?(@c))
+			# 		num = ""
+			# 		tok = Token.new(Token::NUMBER,num)
+			# 		return tok
+
+			# #-=-=-=-=
+			# #Operators
+			# #-=-=-=-=
 				
 				
 			# more code needed here! complete the code here 
@@ -138,7 +198,7 @@ class Scanner
 			# unknown or unrecognized tokens.
 			## tok = Token.new("unknown","unknown")
 
-		end
+		
 	
 	end
 	
@@ -146,6 +206,7 @@ class Scanner
 	# Helper methods for Scanner
 	#
 	def letter?(lookAhead)
+		print lookAhead
 		lookAhead =~ /^[a-z]|[A-Z]$/
 	end
 
@@ -154,16 +215,19 @@ class Scanner
 	end
 
 	def whitespace?(lookAhead)
+		print lookAhead
 		lookAhead =~ /^(\s)+$/
 	end
 
 	#REFRENCE2
 	def print?(lookAhead)
+		#print lookAhead
 		lookAhead =~ /^p|r|i|n|t/
 	end
 
 	def operator?(lookAhead)
-		lookAhead =~ /\/|\-|\+|\*|\=/
+		lookAhead =~ /\/|\-|\+|\*|\=|\(|\)/
+		print lookAhead
 	end
 
 	# Method open_file?
