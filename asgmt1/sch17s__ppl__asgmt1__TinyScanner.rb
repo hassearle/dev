@@ -75,19 +75,19 @@ class Scanner
 	# the next token
 	(def nextToken() 
 		#EOF
-		print "eof\n"
-		print "letter?: "
-		print letter?(@c)
-		print "\n"
+		#print "eof\n"
+		#print "letter?: "
+		#print letter?(@c)
+		#print "\n"
 		(if(@c == "!eof!")
 			return Token.new(Token::EOF,"eof")
 
 		#WHITESPACE
 		elsif(whitespace?(@c) )
 			str =""
-			print "whitespace?: "
-			print whitespace?(@c) 
-			print "\n"
+			#print "whitespace?: "
+			#print whitespace?(@c) 
+			#print "\n"
 			#collects all whitespace between tokens		
 			(while whitespace?(@c)
 				str += @c
@@ -101,8 +101,8 @@ class Scanner
 		#collects letter tokens
 		elsif(letter?(@c) )
 			ltr = @c
-			pnt = ""
-			print "start letter \n"
+			# pnt = ""
+			#print "start letter \n"
 				
 			
 			# (if(ltr == 'p')
@@ -124,15 +124,16 @@ class Scanner
 
 		#NUMBERS
 		elsif(numeric?(@c))
-			num = ""
-			tok = Token.new(Token::NUMBER,num)
+			num = @c
+			nextCh()
+			tok = Token.new(Token::NBR,num)
 			return tok
 
 		end)#end of if()
 		
-		(if(3==3) 
-			print "if2\n"
-		end)
+		# (if(3==3) 
+		# 	print "if2\n"
+		# end)
 
 		
 	
