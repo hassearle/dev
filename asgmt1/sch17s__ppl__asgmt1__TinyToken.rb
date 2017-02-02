@@ -17,27 +17,10 @@ class Token
 	EQUAL = "="
 	MULTIOP = "*"
 	PRINT = "print"
+	LTR = "letter"
+	NUM = "number"
+	WS = "WhiteSpace"
  
-
-#ashTemp
-	# PGM        -->   STMT+
-	# STMT       -->   ASSIGN   |   "print"  EXP                           
-	# ASSIGN     -->   ID  "="  EXP
-	# EXP        -->   TERM   ETAIL
-	# ETAIL      -->   "+" TERM   ETAIL  | "-" TERM   ETAIL | EPSILON
-	# TERM       -->   FACTOR  TTAIL
-	# TTAIL      -->   "*" FACTOR TTAIL  | "/" FACTOR TTAIL | EPSILON
-	# FACTOR     -->   "(" EXP ")" | INT | ID   
-	#                  
-	# ID         -->   ALPHA+
-	# ALPHA      -->   a  |  b  | … | z  or 
-	#                  A  |  B  | … | Z
-	# INT        -->   DIGIT+
-	# DIGIT      -->   0  |  1  | …  |  9
-	# WHITESPACE -->   Ruby Whitespace
-
-
-
 
 #add the rest of the tokens needed based on the grammar
 #specified in the Scanner class "TinyScanner.rb"
