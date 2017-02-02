@@ -84,7 +84,10 @@ class Scanner
 
 		#WHITESPACE
 		elsif(whitespace?(@c) )
-			str =""
+			str = @c
+			(if(str == "\n")
+				return Token.new(Token::NL,str)
+			end)
 			#print "whitespace?: "
 			#print whitespace?(@c) 
 			#print "\n"
@@ -120,16 +123,40 @@ class Scanner
 			
 			nextCh()
 
-			return Token.new(Token::LTR,ltr)
+			return Token.new(Token::LETTER,ltr)
 
 		#NUMBERS
 		elsif(numeric?(@c))
 			num = @c
 			nextCh()
-			tok = Token.new(Token::NBR,num)
+			tok = Token.new(Token::NUMBER,num)
 			return tok
 
+		#OPERATORS
+		elsif(operator?(@c))
+			opr = @c
+			nextCh()
+			case(opr)
+			when"+"then return Token.new(Token::ADDOP,opr)
+			when"-"then return Token.new(Token::SUBOP,opr)
+			when"/"then return Token.new(Token::DIVIDOP,opr)
+			when"*"then return Token.new(Token::MULTIOP,opr)
+			when"="then return Token.new(Token::EQUAL,opr)
+			end
+			
+		#PARENTHESIS
+		# elsif (parenthesis?(@c))
+		# 	par = @c
+		# 	nextCh()
+		# 	case(opr)
+		# 	when"("then return Token.new(Token::LPAREN,par)
+		# 	when")"then return Token.new(Token::RPAREN,par)
+		# 	end
+
+
+
 		end)#end of if()
+		
 		
 		# (if(3==3) 
 		# 	print "if2\n"
@@ -175,6 +202,11 @@ class Scanner
 	def operator?(lookAhead)
 		lookAhead =~ /\/|\-|\+|\*|\=/
 	end
+
+	def parenthesis?(lookAhead)
+		lookAhead =~ /\(|\)/
+		print lookAhead
+	end 
 
 	# Method open_file?
 	# exits the program if it cannot open input file
