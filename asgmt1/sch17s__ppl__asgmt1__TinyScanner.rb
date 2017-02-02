@@ -156,14 +156,12 @@ class Scanner
 
 
 		end)#end of if()
-		
+
 		
 		# (if(3==3) 
 		# 	print "if2\n"
 		# end)
 
-		
-	
 	end)#end of functin
  	
  	#
@@ -180,10 +178,8 @@ class Scanner
 	# Helper methods for Scanner
 	#
 	def letter?(lookAhead)
-		lookAhead =~ /^a|[a-z]|[A-Z]$/
-		# print "letter?: "
-		# print $~
-		# print "\n"
+
+		lookAhead =~ /^[a-z]|[A-Z]$/
 	end
 
 	def numeric?(lookAhead)
@@ -191,16 +187,19 @@ class Scanner
 	end
 
 	def whitespace?(lookAhead)
+		print lookAhead
 		lookAhead =~ /^(\s)+$/
 	end
 
 	#REFRENCE2
 	def print?(lookAhead)
+		#print lookAhead
 		lookAhead =~ /^p|r|i|n|t/
 	end
 
 	def operator?(lookAhead)
-		lookAhead =~ /\/|\-|\+|\*|\=/
+		lookAhead =~ /\/|\-|\+|\*|\=|\(|\)/
+		print lookAhead
 	end
 
 	def parenthesis?(lookAhead)
