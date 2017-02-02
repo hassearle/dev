@@ -61,7 +61,7 @@ class Scanner
 	end
 	
 	# Method nextCh() returns the next character in the file
-	def nextCh()
+	(def nextCh()
 		if (! @f.eof?)
 			@c = @f.getc()
 		else
@@ -69,84 +69,93 @@ class Scanner
 		end
 		
 		return @c
-	end
+	end)
 
 	# Method nextToken() reads characters in the file and returns
 	# the next token
-	def nextToken() 
-		if @c == "!eof!"
+	(def nextToken() 
+		#EOF
+		print "eof\n"
+		print "letter?: "
+		print letter?(@c)
+		print "\n"
+		(if(@c == "!eof!")
 			return Token.new(Token::EOF,"eof")
 
-			#-=-=-=-=
-			#WhiteSpace
-			#-=-=-=-=
-				elsif (whitespace?(@c))
-					str =""
-			
-					#collects all whitespace between tokens		
-					while whitespace?(@c)
-						str += @c
-						nextCh()
-					end
-			
-					tok = Token.new(Token::WS,str)
-					return tok
-
-			#-=-=-=-=
-			#Letters & Print
-			#-=-=-=-=
-				#collects letter tokens
-				elsif(letter?(@c))
-					ltr = ""
-					pnt = ""
-					
-					#input == print?
-					if(@c == 'p')
-						while print?(@c)
-							pnt += @c
-							if(pnt == "print")
-								tok = Token.new(Token::PRINT,pnt)
-								return tok
-							end
-							nextCh()
-						end
-										
-					else 
-						tok = Token.new(Token::LETTER,ltr)
-						return tok
-					end
-
-			#-=-=-=-=
-			#Numbers
-			#-=-=-=-=
-				elsif(numeric?(@c))
-					num = ""
-					tok = Token.new(Token::NUMBER,num)
-					return tok
-
-			#-=-=-=-=
-			#Operators
-			#-=-=-=-=
-				
-				
-			# more code needed here! complete the code here 
-			# so that your scanner can correctly recognize
-			# and print or display all tokens in our grammar
-		
-			# don't want to give back nil token!
-			# remember to include some case to handle
-			# unknown or unrecognized tokens.
-			## tok = Token.new("unknown","unknown")
-
-		end
+		#WHITESPACE
+		elsif(whitespace?(@c) )
+			str =""
+			print "whitespace?: "
+			print whitespace?(@c) 
+			print "\n"
+			#collects all whitespace between tokens		
+			(while whitespace?(@c)
+				str += @c
+				nextCh()
+			end)
 	
-	end
+			tok = Token.new(Token::WS,str)
+			return tok
+
+		#LETTERS
+		#collects letter tokens
+		elsif(letter?(@c) )
+			ltr = @c
+			pnt = ""
+			print "start letter \n"
+				
+			
+			# (if(ltr == 'p')
+			# 	while print?(@c)
+			# 		# puts pnt = pnt + @c
+
+			# 		if(pnt == "print")
+			# 			tok = Token.new(Token::PRINT,pnt)
+			# 			return tok
+			# 		end#end of if
+			# 		@c.insert()
+			# 		nextCh()
+			# 	end#end of while
+			# end)#end of if
+			
+			nextCh()
+
+			return Token.new(Token::LTR,ltr)
+
+		#NUMBERS
+		elsif(numeric?(@c))
+			num = ""
+			tok = Token.new(Token::NUMBER,num)
+			return tok
+
+		end)#end of if()
+		
+		(if(3==3) 
+			print "if2\n"
+		end)
+
+		
+	
+	end)#end of functin
+ 	
+ 	#
+		# more code needed here! complete the code here 
+		# so that your scanner can correctly recognize
+		# and print or display all tokens in our grammar
+
+		# don't want to give back nil token!
+		# remember to include some case to handle
+		# unknown or unrecognized tokens.
+		## tok = Token.new("unknown","unknown")
 	
 	#
 	# Helper methods for Scanner
 	#
 	def letter?(lookAhead)
-		lookAhead =~ /^[a-z]|[A-Z]$/
+		lookAhead =~ /^a|[a-z]|[A-Z]$/
+		# print "letter?: "
+		# print $~
+		# print "\n"
 	end
 
 	def numeric?(lookAhead)
