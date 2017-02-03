@@ -75,23 +75,16 @@ class Scanner
 	# the next token
 	(def nextToken() 
 		#EOF
-		#print "eof\n"
-		#print "letter?: "
-		#print letter?(@c)
-		#print "\n"
 		(if(@c == "!eof!")
 			return Token.new(Token::EOF,"eof")
 
 		#WHITESPACE
 		elsif(whitespace?(@c) )
 			str = @c
+			nextCh()
 			(if(str == "\n")
 				return Token.new(Token::NL,str)
 			end)
-			#print "whitespace?: "
-			#print whitespace?(@c) 
-			#print "\n"
-			#collects all whitespace between tokens		
 			(while whitespace?(@c)
 				str += @c
 				nextCh()
@@ -101,62 +94,57 @@ class Scanner
 			return tok
 
 		#LETTERS
-		#collects letter tokens
 		elsif(letter?(@c) )
 			ltr = @c
-			# pnt = ""
-			#print "start letter \n"
-				
+			pnt = ""
 			
-			# (if(ltr == 'p')
-			# 	while print?(@c)
-			# 		# puts pnt = pnt + @c
-
-			# 		if(pnt == "print")
-			# 			tok = Token.new(Token::PRINT,pnt)
-			# 			return tok
-			# 		end#end of if
-			# 		@c.insert()
-			# 		nextCh()
-			# 	end#end of while
-			# end)#end of if
+			(if(ltr == 'p')		#collects letter tokens
+				while print?(@c)
+					pnt += @c
+					nextCh()
+					if(pnt == "print")
+						tok = Token.new(Token::PRINT,pnt)
+						return tok
+					end#end of if
+				end#end of while
+			end)#end of if
 			
 			nextCh()
-
-			return Token.new(Token::LETTER,ltr)
+			return Token.new(Token::LTR,ltr)
 
 		#NUMBERS
 		elsif(numeric?(@c))
 			num = @c
 			nextCh()
-			tok = Token.new(Token::NUMBER,num)
+			tok = Token.new(Token::NUM,num)
 			return tok
 
 		#OPERATORS
 		elsif(operator?(@c))
 			opr = @c
 			nextCh()
-			case(opr)
+			(case(opr)
 			when"+"then return Token.new(Token::ADDOP,opr)
 			when"-"then return Token.new(Token::SUBOP,opr)
 			when"/"then return Token.new(Token::DIVIDOP,opr)
 			when"*"then return Token.new(Token::MULTIOP,opr)
 			when"="then return Token.new(Token::EQUAL,opr)
-			end
+			end)
 			
-		#PARENTHESIS
-		# elsif (parenthesis?(@c))
-		# 	par = @c
-		# 	nextCh()
-		# 	case(opr)
-		# 	when"("then return Token.new(Token::LPAREN,par)
-		# 	when")"then return Token.new(Token::RPAREN,par)
-		# 	end
+		# PARENTHESIS
+		elsif (operator?(@c))
+			print "yep\n"
+			par = @c
+			nextCh()
+			case(opr)
+			when"("then return Token.new(Token::LPAREN,par)
+			when")"then return Token.new(Token::RPAREN,par)
+			end
 
 
-
+		print "ash"
 		end)#end of if()
-
+		print "foo \n"
 		
 		# (if(3==3) 
 		# 	print "if2\n"
@@ -178,7 +166,6 @@ class Scanner
 	# Helper methods for Scanner
 	#
 	def letter?(lookAhead)
-
 		lookAhead =~ /^[a-z]|[A-Z]$/
 	end
 
@@ -187,24 +174,27 @@ class Scanner
 	end
 
 	def whitespace?(lookAhead)
-		print lookAhead
 		lookAhead =~ /^(\s)+$/
 	end
 
 	#REFRENCE2
 	def print?(lookAhead)
-		#print lookAhead
 		lookAhead =~ /^p|r|i|n|t/
 	end
 
 	def operator?(lookAhead)
 		lookAhead =~ /\/|\-|\+|\*|\=|\(|\)/
-		print lookAhead
 	end
 
 	def parenthesis?(lookAhead)
-		lookAhead =~ /\(|\)/
-		print lookAhead
+		# if(lookAhead == ('(' || ')'))
+		# 	print lookAhead
+		# 	print "true"
+		# 	return true
+		# else return false
+		# end
+		
+		#lookAhead =~ /\(|\(/
 	end 
 
 	# Method open_file?
