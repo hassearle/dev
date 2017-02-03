@@ -82,9 +82,9 @@ class Scanner
 		elsif(whitespace?(@c) )
 			str = @c
 			nextCh()
-			(if(str == "\n")
-				return Token.new(Token::NL,str)
-			end)
+			# (if(newline?(@c))
+			# 	return Token.new(Token::NL,str)
+			# end)
 			(while whitespace?(@c)
 				str += @c
 				nextCh()
@@ -126,20 +126,14 @@ class Scanner
 			(case(opr)
 			when"+"then return Token.new(Token::ADDOP,opr)
 			when"-"then return Token.new(Token::SUBOP,opr)
-			when"/"then return Token.new(Token::DIVIDOP,opr)
+			when"/"then return Token.new(Token::DIVIDEOP,opr)
 			when"*"then return Token.new(Token::MULTIOP,opr)
 			when"="then return Token.new(Token::EQUAL,opr)
+			when"("then return Token.new(Token::LPAREN,opr)
+			when")"then return Token.new(Token::RPAREN,opr)
 			end)
 			
-		# PARENTHESIS
-		elsif (operator?(@c))
-			print "yep\n"
-			par = @c
-			nextCh()
-			case(opr)
-			when"("then return Token.new(Token::LPAREN,par)
-			when")"then return Token.new(Token::RPAREN,par)
-			end
+		
 
 
 		print "ash"
@@ -177,6 +171,10 @@ class Scanner
 		lookAhead =~ /^(\s)+$/
 	end
 
+	def newline?(lookAhead)
+		lookAhead =~ /^./
+	end
+
 	#REFRENCE2
 	def print?(lookAhead)
 		lookAhead =~ /^p|r|i|n|t/
@@ -194,7 +192,7 @@ class Scanner
 		# else return false
 		# end
 		
-		#lookAhead =~ /\(|\(/
+		lookAhead =~ /\(|\)/
 	end 
 
 	# Method open_file?

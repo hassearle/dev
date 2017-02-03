@@ -19,9 +19,9 @@ tok = scan.nextToken()
 @output = ""
 while (tok.get_type() != Token::EOF)
    @output = "Token: "+"\"" + "#{tok}"+"\"" + " type: #{tok.get_type()}" + "\n"
-   # @outputNL = @output + "\n"
    puts @output
+   #refrence1
    File.open("kss0024output.txt", "a") {|f| f.write(@output) }
    tok = scan.nextToken()
 end 
-puts @output
+puts "Token: "+"\"" + "#{tok}"+"\"" + " type: #{tok.get_type()}"
