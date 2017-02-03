@@ -17,6 +17,7 @@ load "/home/asearle/dev/asgmt1/sch17s__ppl__asgmt1__TinyScanner.rb"
 scan = Scanner.new("sch17s__ppl__asgmt1__input.txt")
 tok = scan.nextToken()
 @output = ""
+
 while (tok.get_type() != Token::EOF)
    @output = "Token: "+"\"" + "#{tok}"+"\"" + " type: #{tok.get_type()}" + "\n"
    puts @output
@@ -24,4 +25,6 @@ while (tok.get_type() != Token::EOF)
    File.open("kss0024output.txt", "a") {|f| f.write(@output) }
    tok = scan.nextToken()
 end 
-puts "Token: "+"\"" + "#{tok}"+"\"" + " type: #{tok.get_type()}"
+@lastOutput = "Token: "+"\"" + "#{tok}"+"\"" + " type: #{tok.get_type()}"
+puts @lastOutput
+File.open("kss0024output.txt", "a") {|f| f.write(@lastOutput) }
