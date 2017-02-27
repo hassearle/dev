@@ -13,13 +13,14 @@ class Token
 	RPAREN = ")"
 	ADDOP  = "+"
 	SUBOP  = "-"
-	DEVIDEOP = "/"
+	DIVIDEOP = "/"
 	EQUAL = "="
 	MULTIOP = "*"
 	PRINT = "print"
 	LTR = "letter"
 	NUM = "number"
 	WS = "WhiteSpace"
+	NL = "NewLine"
  
 
 #add the rest of the tokens needed based on the grammar

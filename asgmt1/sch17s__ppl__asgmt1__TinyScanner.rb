@@ -83,16 +83,18 @@ class Scanner
 			str = @c
 			nextCh()
 			# (if(newline?(@c))
-			# 	return Token.new(Token::NL,str)
+			# 	nextCh()
+			# 	return Token.new(Token::NL,"NewLine")
 			# end)
 			(while whitespace?(@c)
 				str += @c
 				nextCh()
 			end)
-	
+
+			
 			tok = Token.new(Token::WS,str)
 			return tok
-
+			
 		#LETTERS
 		elsif(letter?(@c) )
 			ltr = @c
@@ -109,8 +111,15 @@ class Scanner
 				end#end of while
 			end)#end of if
 			
+			if(ltr.length > 0)
+			tok = Token.new(Token::NL,str)
+			return tok
+
+			else 
+
 			nextCh()
 			return Token.new(Token::LTR,ltr)
+			end
 
 		#NUMBERS
 		elsif(numeric?(@c))
@@ -144,18 +153,9 @@ class Scanner
 		# 	print "if2\n"
 		# end)
 
-	end)#end of functin
+	end)#end of function 
  	
- 	#
-		# more code needed here! complete the code here 
-		# so that your scanner can correctly recognize
-		# and print or display all tokens in our grammar
-
-		# don't want to give back nil token!
-		# remember to include some case to handle
-		# unknown or unrecognized tokens.
-		## tok = Token.new("unknown","unknown")
-	
+ 		
 	#
 	# Helper methods for Scanner
 	#
@@ -183,17 +183,6 @@ class Scanner
 	def operator?(lookAhead)
 		lookAhead =~ /\/|\-|\+|\*|\=|\(|\)/
 	end
-
-	def parenthesis?(lookAhead)
-		# if(lookAhead == ('(' || ')'))
-		# 	print lookAhead
-		# 	print "true"
-		# 	return true
-		# else return false
-		# end
-		
-		lookAhead =~ /\(|\)/
-	end 
 
 	# Method open_file?
 	# exits the program if it cannot open input file
